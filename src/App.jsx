@@ -54,9 +54,9 @@ function App() {
       </div>
 
       <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="origen">
-          <Form.Label>Selecciona un Origen</Form.Label>
-          <Form.Select
+        <Form.Group className="row p-2" controlId="origen">
+          <Form.Label className="col text-start">Selecciona un Origen</Form.Label>
+          <Form.Select className="col"
             value={origen}
             onChange={(e) => setOrigen(e.target.value)}
           >
@@ -65,9 +65,9 @@ function App() {
           </Form.Select>
         </Form.Group>
 
-        <Form.Group controlId="destino">
-          <Form.Label>Selecciona un Destino</Form.Label>
-          <Form.Select
+        <Form.Group className="row p-2" controlId="destino">
+          <Form.Label className="col text-start">Selecciona un Destino</Form.Label>
+          <Form.Select className="col"
             value={destino}
             onChange={(e) => setDestino(e.target.value)}
           >
@@ -76,9 +76,9 @@ function App() {
           </Form.Select>
         </Form.Group>
 
-        <Form.Group controlId="aerolinea">
-          <Form.Label>Selecciona una aerolinea</Form.Label>
-          <Form.Select
+        <Form.Group className="row p-2" controlId="aerolinea">
+          <Form.Label className="col text-start">Selecciona una aerolinea</Form.Label>
+          <Form.Select className="col"
             value={aerolinea}
             onChange={(e) => setAerolinea(e.target.value)}
           >
@@ -87,20 +87,21 @@ function App() {
           </Form.Select>
         </Form.Group>
 
-        <Form.Group>
-          <Form.Label>Fecha del vuelo</Form.Label>
-          <DatePicker
+        <Form.Group className="row p-2">
+          <Form.Label className="col text-start">Fecha del vuelo</Form.Label>
+          <div className="col text-end" ><DatePicker
             selected={date}
             onChange={(date) => setDate(date)}
             dateFormat="dd/MM/yyyy"
             minDate={new Date()}
             className="form-control"
-          />
+          /></div>
+          
         </Form.Group>
 
-        <Form.Group controlId="time">
-          <Form.Label>Selecciona un horario</Form.Label>
-          <Form.Select
+        <Form.Group className="row p-2" controlId="time">
+          <Form.Label className="col text-start">Selecciona un horario</Form.Label>
+          <Form.Select className="col"
             value={horario}
             onChange={(e) => setHorario(e.target.value)}
           >
@@ -109,7 +110,7 @@ function App() {
           </Form.Select>
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button  className="m-4" variant="primary" type="submit">
           Enviar
         </Button>
       </Form>
