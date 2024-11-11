@@ -15,6 +15,7 @@ function App() {
   const [horario, setHorario] = useState("");
 
   const [resultado, setResultado] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,12 +39,21 @@ function App() {
       });
 
       const result = await response.json();
-      console.log(result.duration);
-      setResultado(result.duration);
-      // Maneja la respuesta del servidor
+
+      if (!response.ok) {
+        if (response.status === 400) {
+          setError(result);
+          setResultado(null);
+        } else {
+          setError("Ocurrió un error");
+        }
+      } else {
+        setResultado(result);
+        setError(null);
+      }
     } catch (error) {
       console.error("Error:", error);
-      setResultado("No pudimos determinar la duración del vuelo");
+      setError(error);
     }
   };
 
@@ -55,8 +65,11 @@ function App() {
 
       <Form onSubmit={handleSubmit}>
         <Form.Group className="row p-2" controlId="origen">
-          <Form.Label className="col text-start">Selecciona un Origen</Form.Label>
-          <Form.Select className="col"
+          <Form.Label className="col text-start">
+            Selecciona un Origen
+          </Form.Label>
+          <Form.Select
+            className="col"
             value={origen}
             onChange={(e) => setOrigen(e.target.value)}
           >
@@ -66,8 +79,11 @@ function App() {
         </Form.Group>
 
         <Form.Group className="row p-2" controlId="destino">
-          <Form.Label className="col text-start">Selecciona un Destino</Form.Label>
-          <Form.Select className="col"
+          <Form.Label className="col text-start">
+            Selecciona un Destino
+          </Form.Label>
+          <Form.Select
+            className="col"
             value={destino}
             onChange={(e) => setDestino(e.target.value)}
           >
@@ -77,8 +93,11 @@ function App() {
         </Form.Group>
 
         <Form.Group className="row p-2" controlId="aerolinea">
-          <Form.Label className="col text-start">Selecciona una aerolinea</Form.Label>
-          <Form.Select className="col"
+          <Form.Label className="col text-start">
+            Selecciona una aerolinea
+          </Form.Label>
+          <Form.Select
+            className="col"
             value={aerolinea}
             onChange={(e) => setAerolinea(e.target.value)}
           >
@@ -89,19 +108,23 @@ function App() {
 
         <Form.Group className="row p-2">
           <Form.Label className="col text-start">Fecha del vuelo</Form.Label>
-          <div className="col text-end" ><DatePicker
-            selected={date}
-            onChange={(date) => setDate(date)}
-            dateFormat="dd/MM/yyyy"
-            minDate={new Date()}
-            className="form-control"
-          /></div>
-          
+          <div className="col text-end">
+            <DatePicker
+              selected={date}
+              onChange={(date) => setDate(date)}
+              dateFormat="dd/MM/yyyy"
+              minDate={new Date()}
+              className="form-control"
+            />
+          </div>
         </Form.Group>
 
         <Form.Group className="row p-2" controlId="time">
-          <Form.Label className="col text-start">Selecciona un horario</Form.Label>
-          <Form.Select className="col"
+          <Form.Label className="col text-start">
+            Selecciona un horario
+          </Form.Label>
+          <Form.Select
+            className="col"
             value={horario}
             onChange={(e) => setHorario(e.target.value)}
           >
@@ -110,14 +133,25 @@ function App() {
           </Form.Select>
         </Form.Group>
 
-        <Button  className="m-4" variant="primary" type="submit">
+        <Button className="m-4" variant="primary" type="submit">
           Enviar
         </Button>
       </Form>
 
       {resultado && (
         <div className="h5 border border-success rounded m-4 p-3">
-          El vuelo seleccionado tiene una duración de {resultado}
+          <p>
+            El vuelo seleccionado tiene una duración de {resultado.duration}
+          </p>
+          <p>
+            Historicamente, el promedio de la duración del vuelo es de{" "}
+            {resultado.promedio}
+          </p>
+        </div>
+      )}
+      {error && (
+        <div className="h5 border border-success rounded m-4 p-3">
+          <p>{error}</p>
         </div>
       )}
     </Container>
