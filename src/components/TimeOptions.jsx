@@ -1,8 +1,6 @@
 import React from "react";
 
-const times = [
-  'mañana', 'tarde', 'noche' 
-];
+const times = ["mañana", "tarde", "noche"];
 
 const TimeOptions = () => {
   return (
